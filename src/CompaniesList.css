@@ -1,0 +1,45 @@
+/* App.css (or CompaniesList.css if separate) */
+
+/* Styling for the section containing the card */
+.col-md-4 {
+    margin-bottom: 20px; /* Adds spacing between multiple columns */
+  }
+  
+  /* Styling for the card */
+  .card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card-title {
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 15px;
+    padding: 10px 0;
+    background-color: #f0f0f0;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .card-text {
+    padding: 15px;
+  }
+  
+  /* Styling for the list group */
+  .list-group {
+    margin-bottom: 0; /* Remove bottom margin to avoid extra space */
+  }
+  
+  .list-group-item {
+    cursor: pointer;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .list-group-item:last-child {
+    border-bottom: none; /* Remove bottom border from last item */
+  }
+  
+  .list-group-item:hover {
+    background-color: #f0f0f0; /* Light gray background on hover */
+  }
+  
