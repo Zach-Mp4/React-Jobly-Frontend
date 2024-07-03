@@ -4,12 +4,14 @@ import JoblyApi from "./JoblyApi";
 import './Form.css'
 function Register({user, setUser}){
     const navigate = useNavigate();
-    
+    const [error, setError] = useState(null); // Error state
+
     useEffect(() => {
-        if (user.length !== 0) navigate("/");
-      }, []);
+      if (user && user.token) navigate("/");
+    }, [user, navigate]);
 
     const handleSubmit = async evt => {
+      try{
         evt.preventDefault();
         async function sendData(data){
             let res = await JoblyApi.register(data);
@@ -20,10 +22,16 @@ function Register({user, setUser}){
         
         setUser({
             username: formData.username,
+            firstName: formData.firstName,
+            lastName: formData.lastName,
+            email: formData.email,
             token: res
         });
 
         navigate('/')
+      } catch (err){
+        setError(err);
+      }
     };
 
 
@@ -45,6 +53,7 @@ function Register({user, setUser}){
 
     return(
         <section className="formSection">
+        {error && <p style={{ color: 'red' }}>{error}</p>} {/* Display error message */}
         <form onSubmit={handleSubmit}>
 
           <label htmlFor="username">Username:</label>

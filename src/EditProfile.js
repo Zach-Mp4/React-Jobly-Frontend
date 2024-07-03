@@ -2,33 +2,19 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import JoblyApi from "./JoblyApi";
 import './Form.css'
-function Login({user, setUser}){
+
+function EditProfile({user, setUser}){
     const navigate = useNavigate();
-    const [error, setError] = useState(null); // Error state
-    useEffect(() => {
-        if (user.length !== 0) navigate("/");
-      }, []);
+    const [error, setError] = useState(null);
 
     const handleSubmit = async evt => {
       try{
         evt.preventDefault();
-        async function sendData(data){
-            let res = await JoblyApi.login(data);
-            return res;
-        }
-
-        let res = await sendData(formData);
-        JoblyApi.token = res;
-        let userData = await JoblyApi.getUser(formData.username);
-        console.log("user Data");
-        console.log(userData);
+        let token = user.token;
+        let res = await JoblyApi.editUser(user.username, formData);
         setUser({
-            username: userData.username,
-            firstName: userData.firstName,
-            lastName:userData.lastName,
-            email: userData.email,
-            applications: userData.applications,
-            token: res
+            ...res,
+            token:token
         });
 
         navigate('/')
@@ -39,7 +25,9 @@ function Login({user, setUser}){
 
 
     const [formData, setFormData] = useState({
-        username: "",
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
         password: ""
     });
 
@@ -56,29 +44,46 @@ function Login({user, setUser}){
         {error && <p style={{ color: 'red' }}>{error}</p>} {/* Display error message */}
         <form onSubmit={handleSubmit}>
 
-          <label htmlFor="username">Username:</label>
+          <label htmlFor="firstName">First Name:</label>
           <input
-            id="username"
-            name="username"
-            value={formData.username}
+            id="firstName"
+            name="firstName"
+            value={formData.firstName}
             onChange={handleChange}
             required
           />
 
-          <label htmlFor="password">Password:</label>
+          <label htmlFor="lastName">Last Name:</label>
+          <input
+            id="lastName"
+            name="lastName"
+            value={formData.lastName}
+            onChange={handleChange}
+            required
+          />
+
+          <label htmlFor="email">Email:</label>
+          <input
+            id="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+          />
+
+          <label htmlFor="password">Enter Current Password or a new password:</label>
           <input
             id="password"
             name="password"
             value={formData.password}
             onChange={handleChange}
             required
-          />
+          />    
 
-          <button>Login</button>
+          <button>Submit</button>
         </form>
-        <h3><Link to={"/register"}>Don't have an account?</Link></h3>
         </section>
     )
 }
 
-export default Login;
+export default EditProfile;

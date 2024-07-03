@@ -62,13 +62,36 @@ class JoblyApi {
       let res = await this.request('auth/token', info, "post");
       return res.token;
     }
+
+    static async getUser(username) {
+      let res = await this.request(`users/${username}`);
+      return res.user;
+    } 
+
+    static async editUser(username, data) {
+      let res = await this.request(`users/${username}`, data, "patch");
+      return res.user;
+    } 
+
+    static async apply(username, id){
+      try {
+        await this.request(`users/${username}/jobs/${id}`, {}, "post");
+        return true; // Successfully applied
+    } catch (err) {
+        console.error("Apply Job Error:", err);
+        throw new Error("Failed to apply for the job. Please try again later.");
+    }
+    }
+
   
-    // obviously, you'll add a lot here ...
   }
   
   // for now, put token ("testuser" / "password" on class)
-  JoblyApi.token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZ" +
+  JoblyApi.token = "";
+  
+  
+ /* "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZ" +
       "SI6InRlc3R1c2VyIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTU5ODE1OTI1OX0." +
-      "FtrMwBQwe6Ue-glIFgz_Nf8XxRT2YecFCiSpYL0fCXc";
+      "FtrMwBQwe6Ue-glIFgz_Nf8XxRT2YecFCiSpYL0fCXc"; */
 
 export default JoblyApi;

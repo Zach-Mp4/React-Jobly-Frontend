@@ -8,9 +8,11 @@ import {
   ListGroup,
   ListGroupItem
 } from "reactstrap";
+import JoblyApi from "./JoblyApi";
+import Job from "./Job";
 import "./CompaniesList.css"
 
-function JobsList({jobs}){
+function JobsList({user, setUser, jobs}){
     return(
         <section className="col-md-4">
       <Card>
@@ -24,19 +26,7 @@ function JobsList({jobs}){
           <ListGroup>
             {jobs.map(job => (
                 <ListGroupItem key={job.id}>
-                    <Card>
-                        <CardBody>
-                            <CardTitle className="font-weight-bold">
-                                {job.title}
-                            </CardTitle>
-                            <CardText>
-                                <p>Company: <Link to={`/companies/${job.companyHandle}`}>{job.companyHandle}</Link></p>
-                                <p>Salary: {job.salary}</p>
-                                <p>Equity: {job.equity}</p>
-                            </CardText>
-                            <button>Apply!</button>
-                        </CardBody>
-                    </Card>
+                    <Job user={user} setUser={setUser} job={job} />
                 </ListGroupItem>
             ))}
           </ListGroup>

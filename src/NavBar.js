@@ -8,6 +8,7 @@ function NavBar({user, setUser}) {
 
   function handleLogout(){
     setUser([]);
+    localStorage.removeItem("user");
     navigate("/");
   }
 
@@ -21,7 +22,7 @@ function NavBar({user, setUser}) {
         <Nav className="ml-auto" navbar>
         {user.length !== 0 ? (
           <NavItem>
-            <NavLink>{user.username}</NavLink>
+            <NavLink to="/profile">{user.username}</NavLink>
           </NavItem>
       ) : null}
           <NavItem>
